@@ -1,0 +1,36 @@
+def counter(initial_value = 0)
+  # Initialize the counter value
+  counter_value = initial_value
+
+  # Return an array with two methods
+  [
+    # The first method returns the current counter value
+    -> { counter_value },
+    # The second method increases the counter value by 1
+    -> { counter_value += 1 }
+  ]
+end
+
+# Create a new counter instance with an initial value of 10
+counter1 = counter(10)
+
+# Call the first method to get the current counter value
+puts counter1[0].call # Output: 10
+
+# Call the second method to increase the counter value by 1
+counter1[1].call
+
+# Call the first method again to get the updated counter value
+puts counter1[0].call # Output: 11
+
+# Create another counter instance with an initial value of 0
+counter2 = counter
+
+# Call the first method to get the current counter value
+puts counter2[0].call # Output: 0
+
+# Call the second method to increase the counter value by 1
+counter2[1].call
+
+# Call the first method again to get the updated counter value
+puts counter2[0].call # Output: 1
