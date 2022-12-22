@@ -1,0 +1,38 @@
+require 'net/http'
+require 'json'
+
+# Define the API endpoint URL
+endpoint_url = 'https://rickandmortyapi.com/api/episode'
+
+# Send a GET request to the API to retrieve all episodes
+uri = URI(endpoint_url)
+response = Net::HTTP.get(uri)
+
+# Parse the JSON response
+episodes = JSON.parse(response)
+
+# Iterate over each episode and replace the characters array with character objects
+episodes.each do |episode|
+  # Get the array of character URLs
+  character_urls = episode['characters']
+
+  # Initialize an array to hold the character objects
+  characters = []
+
+  # Iterate over the character URLs
+  character_urls.each do |character_url|
+    # Send a GET request to the API to retrieve the character data
+    uri = URI(character_url)
+    response = Net::HTTP.get(uri)
+
+    # Parse the JSON response and add the character object to the array
+    character = JSON.parse(response)
+    characters << character
+  end
+
+  # Replace the characters array with the character objects
+  episode['characters'] = characters
+end
+
+# Log the final array of episodes to the console
+puts episodes
